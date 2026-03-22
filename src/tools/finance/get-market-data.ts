@@ -5,6 +5,8 @@ import { z } from 'zod';
 import { callLlm } from '../../model/llm.js';
 import { formatToolResult } from '../types.js';
 import { getCurrentDate } from '../../agent/prompts.js';
+import { assessSourceConfidence } from '../../markets/source-confidence.js';
+import { buildWorkflowGuidance, inferMarketWorkflow } from '../../markets/workflows.js';
 
 /**
  * Rich description for the get_market_data tool.
@@ -133,12 +135,13 @@ export function createGetMarketData(model: string): DynamicStructuredTool {
     schema: GetMarketDataInputSchema,
     func: async (input, _runManager, config?: RunnableConfig) => {
       const onProgress = config?.metadata?.onProgress as ((msg: string) => void) | undefined;
+      const workflow = inferMarketWorkflow(input.query);
 
       // 1. Call LLM with market data tools bound (native tool calling)
       onProgress?.('Fetching market data...');
       const { response } = await callLlm(input.query, {
         model,
-        systemPrompt: buildRouterPrompt(),
+        systemPrompt: `${buildRouterPrompt()}\n\nAdditional workflow guidance:\n${buildWorkflowGuidance(input.query, 'india')}`,
         tools: MARKET_DATA_TOOLS,
       });
       const aiMessage = response as AIMessage;
@@ -187,6 +190,11 @@ export function createGetMarketData(model: string): DynamicStructuredTool {
 
       // Collect all source URLs
       const allUrls = results.flatMap((r) => r.sourceUrls);
+      const sourceConfidence = assessSourceConfidence({
+        profileId: 'india',
+        workflowId: workflow.id,
+        sourceUrls: allUrls,
+      });
 
       // Build combined data structure
       const combinedData: Record<string, unknown> = {};
@@ -207,7 +215,11 @@ export function createGetMarketData(model: string): DynamicStructuredTool {
         }));
       }
 
-      return formatToolResult(combinedData, allUrls);
+      return formatToolResult(combinedData, allUrls, {
+        researchProfile: 'india',
+        inferredWorkflow: workflow,
+        sourceConfidence,
+      });
     },
   });
 }

@@ -1,12 +1,20 @@
 export interface ToolResult {
   data: unknown;
   sourceUrls?: string[];
+  metadata?: Record<string, unknown>;
 }
 
-export function formatToolResult(data: unknown, sourceUrls?: string[]): string {
+export function formatToolResult(
+  data: unknown,
+  sourceUrls?: string[],
+  metadata?: Record<string, unknown>,
+): string {
   const result: ToolResult = { data };
   if (sourceUrls?.length) {
     result.sourceUrls = sourceUrls;
+  }
+  if (metadata && Object.keys(metadata).length > 0) {
+    result.metadata = metadata;
   }
   return JSON.stringify(result);
 }
