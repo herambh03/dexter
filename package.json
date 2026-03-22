@@ -1,11 +1,11 @@
 {
-  "name": "pocketfm-agent",
+  "name": "pocketfinancer-agent",
   "version": "2026.3.21",
-  "description": "PocketFM - India-first AI agent for investment and real-estate research.",
+  "description": "PocketFinancer - India-first AI agent for investment and real-estate research.",
   "type": "module",
   "main": "src/index.tsx",
   "bin": {
-    "pocketfm": "./src/index.tsx"
+    "pocketfinancer": "./src/index.tsx"
   },
   "scripts": {
     "start": "bun run src/index.tsx",

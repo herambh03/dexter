@@ -103,7 +103,7 @@ Before editing or deleting, use memory_get to verify the exact text to match.`;
 /**
  * Default system prompt used when no specific prompt is provided.
  */
-export const DEFAULT_SYSTEM_PROMPT = `You are PocketFM, a helpful India-first AI assistant.
+export const DEFAULT_SYSTEM_PROMPT = `You are PocketFinancer, a helpful India-first AI assistant.
 
 Current date: ${getCurrentDate()}
 
@@ -208,7 +208,7 @@ export function buildSystemPrompt(
     ? `\n## Tables (for comparative/tabular data)\n\n${profile.tables}`
     : '';
 
-  return `You are PocketFM, a ${profile.label} assistant with access to research tools.
+  return `You are PocketFinancer, a ${profile.label} assistant with access to research tools.
 
 Current date: ${getCurrentDate()}
 

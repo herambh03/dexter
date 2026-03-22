@@ -1,12 +1,12 @@
-# PocketFM
+# PocketFinancer
 
-PocketFM is an India-first autonomous research agent for investments and real estate.
+PocketFinancer is an India-first autonomous research agent for investments and real estate.
 
 It keeps the same core agent interface and feel as Dexter — planning, tool use, self-validation, scratchpads, and conversational research workflows — but is being adapted for Indian applicability by default.
 
 ## Product direction
 
-PocketFM is being reoriented around:
+PocketFinancer is being reoriented around:
 - Indian public equities
 - NSE/BSE-first market reasoning
 - Indian mutual funds, ETFs, and REITs
@@ -18,7 +18,7 @@ PocketFM is being reoriented around:
 This fork currently includes an initial India-first foundation:
 - local fork and remote wiring for `herambh03/dexter`
 - India research profile support in the system prompt
-- rebrand foundation from Dexter to PocketFM
+- rebrand foundation from Dexter to PocketFinancer
 - explicit guidance for Indian investing and real-estate applicability
 
 ## Near-term roadmap
