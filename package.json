@@ -1,11 +1,11 @@
 {
-  "name": "dexter-ts",
+  "name": "pocketfm-agent",
   "version": "2026.3.21",
-  "description": "Dexter - AI agent for deep financial research.",
+  "description": "PocketFM - India-first AI agent for investment and real-estate research.",
   "type": "module",
   "main": "src/index.tsx",
   "bin": {
-    "dexter-ts": "./src/index.tsx"
+    "pocketfm": "./src/index.tsx"
   },
   "scripts": {
     "start": "bun run src/index.tsx",

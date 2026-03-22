@@ -11,7 +11,7 @@ export class IntroComponent extends Container {
   constructor(model: string) {
     super();
 
-    const welcomeText = 'Welcome to Dexter';
+    const welcomeText = 'Welcome to PocketFM';
     const versionText = ` v${packageJson.version}`;
     const fullText = welcomeText + versionText;
     const padding = Math.floor((INTRO_WIDTH - fullText.length - 2) / 2);
@@ -52,7 +52,7 @@ export class IntroComponent extends Container {
     );
 
     this.addChild(new Spacer(1));
-    this.addChild(new Text('Your AI assistant for deep financial research.', 0, 0));
+    this.addChild(new Text('Your India-first AI agent for investing and real-estate research.', 0, 0));
     this.modelText = new Text('', 0, 0);
     this.addChild(this.modelText);
     this.setModel(model);

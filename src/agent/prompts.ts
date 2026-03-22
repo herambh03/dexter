@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getChannelProfile } from './channels.js';
 import { dexterPath } from '../utils/paths.js';
+import { buildResearchProfileSection, getResearchProfile } from '../markets/profiles.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -102,7 +103,7 @@ Before editing or deleting, use memory_get to verify the exact text to match.`;
 /**
  * Default system prompt used when no specific prompt is provided.
  */
-export const DEFAULT_SYSTEM_PROMPT = `You are Dexter, a helpful AI assistant.
+export const DEFAULT_SYSTEM_PROMPT = `You are PocketFM, a helpful India-first AI assistant.
 
 Current date: ${getCurrentDate()}
 
@@ -198,6 +199,7 @@ export function buildSystemPrompt(
 ): string {
   const toolDescriptions = buildToolDescriptions(model);
   const profile = getChannelProfile(channel);
+  const researchProfile = getResearchProfile(process.env.DEXTER_RESEARCH_PROFILE);
 
   const behaviorBullets = profile.behavior.map(b => `- ${b}`).join('\n');
   const formatBullets = profile.responseFormat.map(b => `- ${b}`).join('\n');
@@ -206,7 +208,7 @@ export function buildSystemPrompt(
     ? `\n## Tables (for comparative/tabular data)\n\n${profile.tables}`
     : '';
 
-  return `You are Dexter, a ${profile.label} assistant with access to research tools.
+  return `You are PocketFM, a ${profile.label} assistant with access to research tools.
 
 Current date: ${getCurrentDate()}
 
@@ -229,6 +231,8 @@ ${toolDescriptions}
 - Only use browser when you need JavaScript rendering or interactive navigation (clicking links, filling forms, navigating SPAs)
 - For factual questions about entities (companies, people, organizations), use tools to verify current state
 - Only respond directly for: conceptual definitions, stable historical facts, or conversational queries
+
+${buildResearchProfileSection(researchProfile)}
 
 ${buildSkillsSection()}
 
